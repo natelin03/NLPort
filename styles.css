@@ -1,0 +1,590 @@
+/* Nate Lin Portfolio — custom CSS */
+
+:root {
+  --accent: #C8A55A;        /* gold (default) */
+  --accent-soft: #C8A55A22;
+  --accent-strong: #d9b977;
+  --accent-ink: #1f2128;
+  --grid: rgba(255, 255, 255, 0.05);
+  --bar-mute: rgba(255, 255, 255, 0.12);
+  --tile-text: #ECEAE5;
+  /* Scroll-tied atmosphere: 1 at top of page, fades toward 0 as user scrolls.
+     Applied by a scroll listener in app.jsx; used to dim hero vignette, grid,
+     and other ambient overlays so lower sections feel cleaner. */
+  --atmos: 1;
+}
+body.theme-cream {
+  --bar-mute: rgba(0, 0, 0, 0.12);
+  --tile-text: #1f2128;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #0b0d12;
+  color: #ECEAE5;
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "ss03", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Selection */
+::selection { background: var(--accent); color: #0b0d12; }
+
+/* Subtle dotted grid overlay (toggleable) */
+.bg-grid {
+  background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -14px -14px;
+}
+
+/* Display headline — sleek modern sans */
+.display-serif {
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+.display-serif em {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+/* Eyebrow / mono label */
+.eyebrow {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+
+/* Photo placeholder striping */
+.placeholder-stripes {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.045) 0 12px,
+    rgba(255, 255, 255, 0.02) 12px 24px
+  );
+}
+.placeholder-stripes-light {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.05) 0 12px,
+    rgba(0, 0, 0, 0.02) 12px 24px
+  );
+}
+
+/* Card */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.3s, background 0.3s;
+}
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+}
+
+/* Tag chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #d8d4c8;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* Buttons */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s, background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink, #0b0d12);
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-soft);
+}
+.btn-primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+.btn-ghost {
+  background: transparent;
+  color: #ECEAE5;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.04);
+}
+.btn-link {
+  background: transparent;
+  color: var(--accent);
+  border: 0;
+  padding: 0;
+  height: auto;
+  gap: 0.4rem;
+}
+.btn-link .arrow {
+  transition: transform 0.25s;
+}
+.btn-link:hover .arrow { transform: translateX(4px); }
+
+/* Section divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* Timeline */
+.tl-rail {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.18), rgba(255,255,255,0.18), transparent);
+}
+@media (min-width: 768px) {
+  .tl-rail { left: 50%; transform: translateX(-0.5px); }
+}
+.tl-dot {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #0b0d12;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px rgba(11,13,18,1), 0 0 0 5px rgba(255,255,255,0.06);
+}
+@media (min-width: 768px) {
+  .tl-dot { left: 50%; transform: translateX(-50%); }
+}
+
+/* Pillar accents */
+.pillar-num {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   CREAM THEME — full-page light variant
+   Activated by class="theme-cream" on <body>
+   ───────────────────────────────────────────── */
+body.theme-cream {
+  background: #f5f2e9;
+  color: #1f2128;
+}
+body.theme-cream ::selection { background: var(--accent); color: #1f2128; }
+
+/* Text */
+body.theme-cream .text-paper-100 { color: #1f2128; }
+body.theme-cream .text-paper-100\/45,
+body.theme-cream .text-paper-100\/55 { color: rgba(31,33,40,0.5); }
+body.theme-cream .text-mute-400 { color: #5e6270; }
+body.theme-cream .text-mute-500 { color: #74798a; }
+
+/* Backgrounds */
+body.theme-cream .bg-ink-850 { background: #f5f2e9; }
+body.theme-cream .bg-ink-900\/70 { background: rgba(245,242,233,0.78); }
+body.theme-cream .bg-ink-900\/95 { background: rgba(245,242,233,0.96); }
+body.theme-cream .bg-ink-800\/80 { background: rgba(255,255,255,0.85); }
+
+/* Borders */
+body.theme-cream .border-white\/\[0\.06\] { border-color: rgba(0,0,0,0.07); }
+body.theme-cream .border-white\/\[0\.07\] { border-color: rgba(0,0,0,0.07); }
+body.theme-cream .border-white\/10 { border-color: rgba(0,0,0,0.1); }
+body.theme-cream .border-white\/15 { border-color: rgba(0,0,0,0.15); }
+body.theme-cream .border-white\/20 { border-color: rgba(0,0,0,0.18); }
+body.theme-cream .border-y { border-color: rgba(0,0,0,0.08); }
+body.theme-cream .divide-white\/\[0\.06\] > * + * { border-color: rgba(0,0,0,0.07); }
+
+/* Card */
+body.theme-cream .card {
+  background: linear-gradient(180deg, #ffffff, #fbfaf5);
+  border-color: rgba(0,0,0,0.07);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+}
+body.theme-cream .card:hover {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.18);
+}
+body.theme-cream .card-glow:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.7) inset,
+    0 22px 50px -22px color-mix(in oklch, var(--accent) 35%, transparent);
+}
+
+/* Chip */
+body.theme-cream .chip {
+  background: rgba(0,0,0,0.03);
+  border-color: rgba(0,0,0,0.1);
+  color: #2a2e37;
+}
+
+/* Buttons */
+body.theme-cream .btn-ghost { color: #1f2128; border-color: rgba(0,0,0,0.18); }
+body.theme-cream .btn-ghost:hover { border-color: rgba(0,0,0,0.45); background: rgba(0,0,0,0.03); }
+
+/* Form */
+body.theme-cream .field {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.1);
+  color: #1f2128;
+}
+body.theme-cream .field:focus { background: #ffffff; }
+body.theme-cream .field::placeholder { color: #9aa0ad; }
+
+/* Nav */
+body.theme-cream .nav-link { color: #5e6270; }
+body.theme-cream .nav-link:hover, body.theme-cream .nav-link.active { color: #1f2128; }
+
+/* Timeline */
+body.theme-cream .tl-rail {
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.16), rgba(0,0,0,0.16), transparent);
+}
+body.theme-cream .tl-dot {
+  background: #f5f2e9;
+  box-shadow: 0 0 0 4px #f5f2e9, 0 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Divider */
+body.theme-cream .divider {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent);
+}
+
+/* Grid + placeholders */
+body.theme-cream .placeholder-stripes {
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.06) 0 12px, rgba(0,0,0,0.02) 12px 24px);
+}
+
+/* Preview pane (project tiles) */
+body.theme-cream .preview-pane {
+  background: linear-gradient(135deg, #f0ede2, #fbfaf5);
+  border-color: rgba(0,0,0,0.06);
+}
+body.theme-cream .dotted-bg {
+  background-image: radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px);
+}
+body.theme-cream .preview-pane .text-mute-500 { color: #6e7280; }
+body.theme-cream .preview-pane .text-paper-100 { color: #1f2128; }
+body.theme-cream .preview-pane [style*="rgba(255,255,255"] { /* nothing */ }
+body.theme-cream .preview-pane .bg-white\/5 { background: rgba(0,0,0,0.06); }
+body.theme-cream .preview-pane .bg-white\/15 { background: rgba(0,0,0,0.18); }
+
+/* Hero vignette softens on cream */
+body.theme-cream .hero-vignette {
+  background:
+    radial-gradient(ellipse at 80% 20%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 60%);
+}
+
+/* Stat numbers should be ink on cream */
+body.theme-cream .display-serif { color: #1f2128; }
+body.theme-cream .display-serif em { color: var(--accent); }
+
+
+/* Contact form */
+.field {
+  width: 100%;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #ECEAE5;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field::placeholder { color: #6e727c; }
+
+/* Nav */
+.nav-link {
+  position: relative;
+  color: #a8acb6;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.nav-link:hover, .nav-link.active { color: #ECEAE5; }
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* Marquee for skills band */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+/* Featured project — slightly elevated treatment */
+.featured-project {
+  background:
+    linear-gradient(140deg, color-mix(in oklch, var(--accent) 6%, transparent), transparent 55%),
+    var(--card-bg, rgba(255,255,255,0.02));
+  border-color: color-mix(in oklch, var(--accent) 22%, rgba(255,255,255,0.08));
+}
+.featured-project::before {
+  content: none;
+}
+
+/* Portrait card — soft border, subtle ambient ring that fades with scroll. */
+.hero-portrait-card {
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+.hero-portrait-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(140deg, rgba(170, 188, 210, 0.18), transparent 45%, transparent 60%, rgba(91, 143, 255, 0.10));
+  opacity: var(--atmos, 1);
+  transition: opacity 0.2s linear;
+  mix-blend-mode: screen;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Hero atmospheric layers.
+   All layers tied to --atmos (set by the scroll handler in app.jsx)
+   so the whole atmosphere fades into the matte page bg as you scroll.
+   ──────────────────────────────────────────────────────────────────── */
+
+#hero {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* Base atmospheric wash — cool blue-gray glow concentrated behind
+   the right-side portrait area, soft warm rim hint on the lower right,
+   gentle cool fill on the left. With the portrait scaled back, the
+   aurora carries more of the atmosphere itself. */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--atmos, 1);
+  transition: opacity 0.2s linear;
+  background:
+    /* main soft key light behind the figure */
+    radial-gradient(ellipse 50% 65% at 76% 42%,
+      rgba(170, 188, 210, 0.28),
+      rgba(120, 140, 170, 0.10) 50%,
+      transparent 78%),
+    /* warm rim hint on the lower right */
+    radial-gradient(ellipse 32% 38% at 88% 70%,
+      rgba(180, 150, 120, 0.10),
+      transparent 70%),
+    /* faint cool fill on the left so the section feels lit, not flat */
+    radial-gradient(ellipse 55% 75% at 8% 35%,
+      rgba(70, 90, 120, 0.14),
+      transparent 62%),
+    /* base bg subtly lifted from the page bg */
+    linear-gradient(135deg, #0f131a 0%, #0d1017 50%, #0b0d12 100%);
+}
+
+/* The portrait bleed — positioned in the right column with a 4:5 aspect.
+   Two stacked masks composited with intersect feather the LEFT edge
+   gradually into the dark text area, and the TOP/BOTTOM into the
+   hero's vertical padding — so the image dissolves into the
+   surrounding environment instead of sitting on a card. */
+.hero-bleed {
+  position: absolute;
+  top: 42%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 38%;
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+  z-index: 1;
+  opacity: calc(var(--atmos, 1) * 0.92);
+  transition: opacity 0.25s linear;
+}
+.hero-bleed img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  filter: contrast(0.95) saturate(0.85) brightness(0.9);
+}
+
+/* Edge vignette anchors text legibility on the left and bottom.
+   Stronger than the aurora so copy stays readable over the portrait. */
+.hero-edge {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(90deg,
+      rgba(11, 13, 18, 0.92) 0%,
+      rgba(11, 13, 18, 0.78) 18%,
+      rgba(11, 13, 18, 0.35) 38%,
+      transparent 58%),
+    linear-gradient(180deg,
+      transparent 55%,
+      rgba(11, 13, 18, 0.55) 82%,
+      #0b0d12 100%);
+}
+
+/* Subtle film grain for premium feel. */
+.hero-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: calc(var(--atmos, 1) * 0.06);
+  transition: opacity 0.2s linear;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNjAnIGhlaWdodD0nMTYwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC45JyBudW1PY3RhdmVzPScyJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJy8+PGZlQ29sb3JNYXRyaXggdmFsdWVzPScwIDAgMCAwIDEgIDAgMCAwIDAgMSAgMCAwIDAgMCAxICAwIDAgMCAwLjYgMCcvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCUyM24pJy8+PC9zdmc+");
+}
+
+/* Hero content sits above all atmospheric layers */
+#hero > .relative { position: relative; z-index: 4; }
+
+/* Mobile: pull the bleed down so it doesn't crowd the copy column. */
+@media (max-width: 767px) {
+  .hero-bleed {
+    width: 110%;
+    right: -10%;
+    top: auto;
+    bottom: 0;
+    height: 62%;
+    opacity: calc(var(--atmos, 1) * 0.55);
+  }
+}
+
+/* Cream theme variants */
+body.theme-cream .hero-aurora {
+  background:
+    radial-gradient(ellipse 55% 55% at 72% 38%,
+      rgba(200, 165, 90, 0.18),
+      transparent 70%),
+    radial-gradient(ellipse 60% 70% at 8% 30%,
+      rgba(180, 165, 140, 0.18),
+      transparent 60%),
+    linear-gradient(135deg, #efe9d8 0%, #f1ecdf 45%, #f5f2e9 100%);
+}
+body.theme-cream .hero-edge {
+  background:
+    linear-gradient(90deg,
+      rgba(245, 242, 233, 0.92) 0%,
+      rgba(245, 242, 233, 0.75) 18%,
+      rgba(245, 242, 233, 0.30) 40%,
+      transparent 60%),
+    linear-gradient(180deg,
+      transparent 55%,
+      rgba(245, 242, 233, 0.55) 82%,
+      #f5f2e9 100%);
+}
+body.theme-cream .hero-bleed img {
+  filter: contrast(1.02) saturate(0.95) brightness(1.02);
+}
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--atmos, 1);
+  transition: opacity 0.2s linear;
+  background:
+    radial-gradient(ellipse at 80% 20%, color-mix(in oklch, var(--accent) 14%, transparent), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba(91, 143, 255, 0.08), transparent 55%);
+}
+.hero-light .hero-vignette {
+  background:
+    radial-gradient(ellipse at 80% 20%, color-mix(in oklch, var(--accent) 18%, transparent), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba(91, 143, 255, 0.06), transparent 60%);
+}
+
+/* Project preview surface */
+.preview-pane {
+  border-radius: 14px;
+  background: linear-gradient(135deg, #181c25, #11141b);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+  position: relative;
+}
+
+/* tiny dot grid for previews */
+.dotted-bg {
+  background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* utility: shimmering border on hover for cards */
+.card-glow:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 18px 50px -20px color-mix(in oklch, var(--accent) 45%, transparent);
+}
