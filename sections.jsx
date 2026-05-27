@@ -278,7 +278,7 @@ function Hero() {
           <div className="md:col-span-5 relative">
             <Reveal delay={2}>
               <div className="hero-portrait-card relative aspect-[4/5] rounded-[28px] overflow-hidden border border-white/10 max-w-[340px] ml-auto" style={{ transform: "translateX(-20%)" }}>
-                <img src="media/portrait-v3.png" alt="Nate Lin" className="absolute inset-0 w-full h-full object-cover" />
+                <img src="media/portrait-v3.jpg" alt="Nate Lin" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.45))" }} />
               </div>
             </Reveal>
